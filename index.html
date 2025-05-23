@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pijat Bekam Panongan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background-color: #000; /* Dark background */
+            color: #fff;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: rgba(0, 0, 0, 0.7); /* Slightly transparent for the top bar */
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .logo-text {
+            font-family: 'Times New Roman', serif; /* Simulating a stylized font */
+            font-size: 1.8em;
+            color: gold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu ul li {
+            margin-left: 30px;
+        }
+
+        .nav-menu ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu ul li a:hover {
+            color: gold;
+        }
+
+        .nav-menu ul li .button {
+            background-color: gold;
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-menu ul li .button:hover {
+            background-color: #e6b800;
+        }
+
+        /* Updated Hero Section for moving image background */
+        .hero-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000; /* Dark base color */
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px; /* Space for fixed header */
+        }
+
+        /* Layer 1: The background image that moves */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Pastikan path gambar ini benar jika diunggah ke server */
+            background-image: url('Gemini_Generated_Image_d9z0erd9z0erd9z0.png'); /* Ganti dengan path relatif atau URL jika diunggah */
+            background-size: 120% 120%; /* Sedikit lebih besar dari viewport untuk efek panning */
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.4; /* Sesuaikan opasitas gambar latar belakang agar tidak terlalu ramai */
+            animation: background-pan 30s linear infinite alternate; /* Animasi bergerak lambat */
+            z-index: 0;
+        }
+
+        /* Layer 2: Overlay cahaya bergerak (tetap pakai pseudo-element ::after) */
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                transparent,
+                rgba(255, 215, 0, 0.2) 10%, /* Golden highlight */
+                rgba(255, 215, 0, 0.4) 20%,
+                rgba(255, 215, 0, 0.2) 30%,
+                transparent 40%
+            );
+            background-size: 300% 100%;
+            animation: frame-shine 10s linear infinite; /* Animasi shine lebih cepat */
+            z-index: 1;
+            pointer-events: none;
+            transform-origin: center center;
+        }
+
+        /* Animation for the background image panning */
+        @keyframes background-pan {
+            0% {
+                background-position: 0% 50%; /* Mulai dari kiri */
+            }
+            100% {
+                background-position: 100% 50%; /* Bergerak ke kanan */
+            }
+        }
+
+        /* Animation for the golden shine */
+        @keyframes frame-shine {
+            0% {
+                background-position: 100% 0; /* Start from right */
+                transform: rotate(0deg);
+            }
+            50% {
+                background-position: 0% 0; /* Move to left */
+                transform: rotate(2deg); /* Subtle rotation */
+            }
+            100% {
+                background-position: 100% 0; /* Reset for continuous loop */
+                transform: rotate(0deg);
+            }
+        }
+
+        /* Ensure content is above the animated background */
+        .content-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            z-index: 2; /* Make sure content is on top */
+            position: relative; /* Needed for z-index to work */
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .text-content {
+            background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+            border: 2px solid gold;
+            padding: 40px;
+            border-radius: 8px;
+            max-width: 550px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: left;
+        }
+
+        .text-content h1 {
+            font-size: 2.5em;
+            color: gold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .text-content p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #ddd;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: gold;
+            color: #000;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #e6b800;
+            transform: translateY(-3px);
+        }
+
+        .circular-logo {
+            border: 5px solid gold;
+            border-radius: 50%;
+            width: 250px; /* Large size for main logo */
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff; /* White background for the inner logo */
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        .circular-logo img {
+            width: 80%; /* Adjust size of inner image */
+            height: 80%;
+            object-fit: contain;
+            border-radius: 50%; /* Keep inner image circular if it's not already */
+        }
+
+        /* Styles for sections below the hero */
+        .content-section {
+            padding: 100px 50px; /* Ample padding for visibility */
+            text-align: center;
+            background-color: #1a1a1a; /* Slightly lighter dark background */
+            border-bottom: 1px solid #333;
+        }
+
+        .content-section:nth-of-type(even) {
+            background-color: #222; /* Alternate background for distinction */
+        }
+
+        .content-section h2 {
+            font-size: 2.2em;
+            color: gold;
+            margin-bottom: 40px;
+        }
+
+        /* Specific styling for the 'Terapis' and 'Bekam' cards */
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px; /* Add margin to separate from H2/P */
+        }
+
+        .service-card {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            width: 280px; /* Konsisten untuk semua kartu layanan */
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Tambah shadow */
+            transition: transform 0.3s ease; /* Efek hover */
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px); /* Efek angkat saat hover */
+        }
+
+        .service-card img {
+            max-width: 100%;
+            height: 150px; /* Tinggi gambar tetap */
+            object-fit: cover; /* Pastikan gambar mengisi area tanpa terdistorsi */
+            border-radius: 8px; /* Sudut sedikit membulat untuk gambar */
+            margin-bottom: 15px;
+        }
+        /* Override untuk gambar terapis yang ingin bulat */
+        .service-card.terapis-card img {
+            width: 150px; /* Ukuran bulat terapis */
+            height: 150px;
+            border-radius: 50%;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            .nav-menu ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-menu ul li {
+                margin: 5px 10px;
+            }
+
+            .hero-section {
+                padding-top: 150px; /* Adjust for stacked header */
+            }
+
+            .content-wrapper {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+
+            .text-content {
+                max-width: 90%;
+                padding: 30px;
+            }
+
+            .text-content h1 {
+                font-size: 2em;
+            }
+
+            .circular-logo {
+                width: 180px;
+                height: 180px;
+            }
+
+            .content-section {
+                padding: 80px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 1.5em;
+            }
+
+            .nav-menu ul li {
+                margin: 5px;
+            }
+
+            .text-content h1 {
+                font-size: 1.8em;
+            }
+
+            .text-content p {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-text">Pijat Bekam Panongan</div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#terapis">Terapis</a></li>
+                <li><a href="#pijat-bekam">Pijat Bekam</a></li>
+                <li><a href="#layanan-kami">Layanan Kami</a></li>
+                <li><a href="#konsultasi">Konsultasi</a></li>
+                <li><a href="#hubungi-kami" class="button">Hubungi Kami</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="content-wrapper">
+            <div class="text-content">
+                <h1>PIJAT BEKAM PANONGAN</h1>
+                <p>Temukan relaksasi dan kesehatan alami bersama Pijat Bekam Panongan. Kami menawarkan layanan pijat dan bekam profesional untuk membantu meredakan pegal-pegal, nyeri otot, melancarkan peredaran darah, serta detoksifikasi tubuh. Rasakan manfaat terapi tradisional untuk kebugaran optimal Anda.</p>
+                <a href="#hubungi-kami" class="cta-button">Jadwalkan Sekarang</a>
+            </div>
+            <div class="circular-logo">
+                <img src="Gemini_Generated_Image_d9z0erd9z0erd9z0.png" alt="Logo Pijat Bekam Panongan">
+            </div>
+        </div>
+    </section>
+
+    <section id="terapis" class="content-section">
+        <h2>Terapis Kami</h2>
+        <p>Kenali tim terapis profesional dan berpengalaman kami yang berdedikasi untuk memberikan pelayanan terbaik bagi Anda.</p>
+        <div class="card-container">
+            <div class="service-card terapis-card">
+                <img src="https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2022/12/12050218/X-Manfaat-Pijat-Refleksi-bagi-Kesehatan-Tubuh-dan-Mental.jpg.webp" alt="Pijat Relaksasi Terapis">
+                <h3>Terapis Relaksasi</h3>
+                <p>Spesialis Pijat Relaksasi</p>
+            </div>
+            <div class="service-card terapis-card">
+                <img src="https://res.cloudinary.com/dk0z4ums3/image/upload/v1670553521/attached_image/pain-management-dan-hal-hal-penting-yang-ada-di-dalamnya.jpg" alt="Terapi Nyeri Terapis">
+                <h3>Terapis Nyeri</h3>
+                <p>Spesialis Bekam & Terapi Nyeri</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pijat-bekam" class="content-section">
+        <h2>Mengenai Pijat & Bekam</h2>
+        <p>Pijat dan bekam adalah terapi kesehatan tradisional yang telah terbukti memberikan berbagai manfaat untuk tubuh dan pikiran. Kami menggabungkan teknik pijat relaksasi dan terapi dengan metode bekam yang aman dan higienis.</p>
+        <p>Pijat membantu melancarkan peredaran darah, meredakan ketegangan otot, dan mengurangi stres. Sementara itu, bekam efektif untuk detoksifikasi, mengurangi nyeri, dan meningkatkan vitalitas.</p>
+        <div class="card-container">
+            <div class="service-card">
+                <img src="https://pusatbekamruqyah.com/wp-content/uploads/2025/01/terapi-bekam.jpg" alt="Bekam Kering">
+                <h3>Bekam Kering</h3>
+                <p>Terapi kop tanpa pengeluaran darah, cocok untuk meredakan nyeri dan melancarkan aliran darah.</p>
+            </div>
+            <div class="service-card">
+                <img src="https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/150/2023/12/06/IMG_20231206_072934_507-2196751036.jpg" alt="Bekam Basah">
+                <h3>Bekam Basah</h3>
+                <p>Metode detoksifikasi efektif dengan pengeluaran darah kotor minimal.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="layanan-kami" class="content-section">
+        <h2>Pilihan Layanan Kami</h2>
+        <p>Kami menyediakan berbagai pilihan terapi yang disesuaikan dengan kebutuhan Anda:</p>
+        <div class="card-container">
+            <div class="service-card">
+                <h3>Pijat Relaksasi</h3>
+                <p>Pijat lembut untuk meredakan stres dan meningkatkan ketenangan.</p>
+            </div>
+            <div class="service-card">
+                <h3>Pijat Terapi</h3>
+                <p>Fokus pada area nyeri dan ketegangan untuk pemulihan yang lebih cepat.</p>
+            </div>
+            <div class="service-card">
+                <h3>Bekam Kering</h3>
+                <p>Terapi kop tanpa pengeluaran darah, cocok untuk meredakan nyeri dan melancarkan aliran darah.</p>
+            </div>
+            <div class="service-card">
+                <h3>Bekam Basah</h3>
+                <p>Metode detoksifikasi efektif dengan pengeluaran darah kotor minimal.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="konsultasi" class="content-section">
+        <h2>Konsultasi Gratis</h2>
+        <p>Tidak yakin terapi mana yang tepat untuk Anda? Jangan ragu untuk berkonsultasi dengan terapis kami. Kami siap membantu Anda menemukan solusi kesehatan terbaik.</p>
+        <a href="#hubungi-kami" class="cta-button">Jadwalkan Konsultasi</a>
+    </section>
+
+    <section id="hubungi-kami" class="content-section" style="background-color: #000; padding-bottom: 50px;">
+        <h2>Hubungi Kami</h2>
+        <p>Siap untuk merasakan manfaat Pijat Bekam Panongan? Hubungi kami sekarang untuk membuat janji temu atau informasi lebih lanjut.</p>
+        <p style="font-size: 1.8em; font-weight: bold; color: gold; margin-top: 30px;">Telepon: 0812-3456-7890</p>
+        <p style="font-size: 1.2em; color: #bbb;">Email: kautzaradji@gmail.com</p>
+        <div style="margin-top: 20px;">
+            <a href="https://www.google.com/maps/dir/-6.3010908,106.5257129/Pijat+bekam+panongan,+Cluster+mutiara+koleret+1+blok+f+no4,+Kabupaten+Tangerang,+Banten+15711/@-6.3010721,106.523149,17z/data=!3m1!4b1!4m10!4m9!1m1!4e1!1m5!1m1!1s0x2e69f9c133ecdc67:0x5569e3b3df6e7439!2m2!1d106.5256964!2d-6.301071!3e2?entry=ttu&g_ep=EgoyMDI1MDUxNS4xIKXMDSoASAFQAw%3D%3D" target="_blank" style="color: #4285F4; font-size: 2.5em; margin: 0 15px;" aria-label="Google Maps"><i class="fas fa-map-marker-alt"></i></a>
+            <a href="https://www.instagram.com/pijat_bekam_panongan/" target="_blank" style="color: #C13584; font-size: 2.5em; margin: 0 15px;"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61576863741178" target="_blank" style="color: #3b5998; font-size: 2.5em; margin: 0 15px;"><i class="fab fa-facebook-f"></i></a>
+        </div>
+    </section>
+
+</body>
+</html>
